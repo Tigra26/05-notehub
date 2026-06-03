@@ -8,6 +8,7 @@ import type { NoteTag } from "../../types/note";
 
 interface NoteFormProps {
   onCancel: () => void;
+  onCreated: () => void;
 }
 
 interface NoteFormValues {
