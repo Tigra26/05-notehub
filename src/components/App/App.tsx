@@ -45,29 +45,29 @@ export default function App() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  const handleSearch = (value:string) => {
-    setInputValue(value);
-    debouncedSearch(value);
-  };
-  
   
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setSearch(value);
     setPage(1);
   }, 500);
 
-  const handleNoteCreated = () => {
-    setInputValue("");
-    setSearch("");
-    setPage(1);
-    closeModal();
+  const handleSearch = (value:string) => {
+    setInputValue(value);
+    debouncedSearch(value);
   }
+ 
+
+  const handleNoteCreated = () => {
+  setInputValue("");
+  setSearch("");
+  setPage(1);
+  closeModal();
+};
 
   return (
     <div className={css["app"]}>
       <header className={css["toolbar"]}>
-        <SearchBox onSearch={handleSearch} value={inputValue} />
+        <SearchBox onSearch={handleSearch} value={inputValue}/>
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
@@ -86,7 +86,7 @@ export default function App() {
       {notes.length > 0 && <NoteList notes={notes} />}
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <NoteForm onCancel={closeModal} onCreated={handleNoteCreated}/>
+          <NoteForm onCancel={closeModal} onCreated={handleNoteCreated} />
         </Modal>
       )}
       <ToastContainer position="top-center" autoClose={1500} theme="colored" />

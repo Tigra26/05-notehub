@@ -36,7 +36,7 @@ const validationSchema = Yup.object({
     .required("Field is required"),
 });
 
-export default function NoteForm({ onCancel }: NoteFormProps) {
+export default function NoteForm({ onCancel, onCreated }: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
@@ -44,7 +44,7 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       toast.success("Note was successfully created");
-      onCancel();
+      onCreated();
     },
     onError() {
       toast.error("Operation failed, please try again later");
