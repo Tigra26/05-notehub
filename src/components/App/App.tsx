@@ -16,6 +16,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 export default function App() {
   const [search, setSearch] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -45,15 +46,28 @@ export default function App() {
     setIsModalOpen(false);
   };
 
-  const handleSearch = useDebouncedCallback((value: string) => {
+  const handleSearch = (value:string) => {
+    setInputValue(value);
+    debouncedSearch(value);
+  };
+  
+  
+  const debouncedSearch = useDebouncedCallback((value: string) => {
     setSearch(value);
     setPage(1);
   }, 500);
 
+  const handleNoteCreated = () => {
+    setInputValue("");
+    setSearch("");
+    setPage(1);
+    closeModal();
+  }
+
   return (
     <div className={css["app"]}>
       <header className={css["toolbar"]}>
-        <SearchBox onSearch={handleSearch} />
+        <SearchBox onSearch={handleSearch} value={inputValue} />
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
@@ -72,7 +86,7 @@ export default function App() {
       {notes.length > 0 && <NoteList notes={notes} />}
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <NoteForm onCancel={closeModal} />
+          <NoteForm onCancel={closeModal} onCreated={handleNoteCreated}/>
         </Modal>
       )}
       <ToastContainer position="top-center" autoClose={1500} theme="colored" />
