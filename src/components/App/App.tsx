@@ -12,7 +12,7 @@ import { PER_PAGE } from "../../constants";
 import Modal from "../Modal/Modal";
 import NoteForm from "../NoteForm/NoteForm";
 import SearchBox from "../SearchBox/SearchBox";
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 
 export default function App() {
   const [search, setSearch] = useState("");
@@ -28,7 +28,7 @@ export default function App() {
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
 
-   useEffect(() => {
+  useEffect(() => {
     if (!data || search === "" || isFetching || isError) {
       return;
     }
@@ -40,20 +40,20 @@ export default function App() {
 
   const openModal = () => {
     setIsModalOpen(true);
-  }
+  };
   const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
 
   const handleSearch = useDebouncedCallback((value: string) => {
-      setSearch(value);
-      setPage(1);
-  }, 500)
+    setSearch(value);
+    setPage(1);
+  }, 500);
 
   return (
-    <div className={css['app']}>
-      <header className={css['toolbar']}>
-        <SearchBox onSearch={handleSearch}/>
+    <div className={css["app"]}>
+      <header className={css["toolbar"]}>
+        <SearchBox onSearch={handleSearch} />
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
@@ -61,24 +61,21 @@ export default function App() {
             handlePage={setPage}
           />
         )}
-        
-        <button className={css['button']} type="button" onClick={openModal}>Create note +</button>
-      </header> 
+
+        <button className={css["button"]} type="button" onClick={openModal}>
+          Create note +
+        </button>
+      </header>
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
-      
+
       {notes.length > 0 && <NoteList notes={notes} />}
       {isModalOpen && (
-  <Modal onClose={closeModal}>
-    <NoteForm onCancel={closeModal} />
-  </Modal>
-)}
-       <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        theme="colored"
-      />
+        <Modal onClose={closeModal}>
+          <NoteForm onCancel={closeModal} />
+        </Modal>
+      )}
+      <ToastContainer position="top-center" autoClose={1500} theme="colored" />
     </div>
   );
 }
-

@@ -3,7 +3,7 @@ import { TailSpin } from "react-loader-spinner";
 
 export default function Loader() {
   return (
-    <div className={css['wrapper']}>
+    <div className={css["wrapper"]}>
       <TailSpin
         height="40"
         width="40"

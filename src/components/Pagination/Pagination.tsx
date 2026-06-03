@@ -1,4 +1,4 @@
-import css from './Pagination.module.css'; 
+import css from "./Pagination.module.css";
 import ReactPaginateModule from "react-paginate";
 import type { ReactPaginateProps } from "react-paginate";
 import type { ComponentType } from "react";
@@ -12,13 +12,17 @@ const ReactPaginate = (
 ).default;
 
 interface PaginationProps {
-totalPages: number;
+  totalPages: number;
   currentPage: number;
   handlePage: (nextPage: number) => void;
 }
 
-export default function Pagination ({totalPages, currentPage, handlePage}: PaginationProps) {
- return (
+export default function Pagination({
+  totalPages,
+  currentPage,
+  handlePage,
+}: PaginationProps) {
+  return (
     <ReactPaginate
       pageCount={totalPages}
       pageRangeDisplayed={4}
@@ -30,5 +34,5 @@ export default function Pagination ({totalPages, currentPage, handlePage}: Pagin
       nextLabel="→"
       previousLabel="←"
     />
- )
+  );
 }
